@@ -56,6 +56,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'cordova.controllers'])
             }
     })
 
+    .state('app.datepicker', {
+            url: '/datepicker',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/datepicker.html',
+                    controller: 'DatePickerCtrl'
+                }
+            }
+    })
+
     .state('app.geo', {
             url: '/geo',
             views: {

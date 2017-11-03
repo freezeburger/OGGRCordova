@@ -86,27 +86,27 @@ angular.module('cordova.controllers', ['ngCordova'])
     })
 })
 
-.controller('BrowserCtrl', ['$scope', function($scope, $cordovaInAppBrowserProvider) {
+//CSS inApp browser : https://github.com/apache/cordova-plugin-inappbrowser
+
+.controller('BrowserCtrl', ['$scope', function($scope, $cordovaInAppBrowser) {
 
     $scope.openBrowser = function(argument) {
-        $cordovaInAppBrowserProvider.open('http://ngcordova.com', '_blank', options)
-            .then(function(event) {
-                // success
-            })
-            .catch(function(event) {
-                // error
-            });
+        window.open('http://apache.org', '_blank', 'location=yes');
     }
 
 }])
 
-.controller('CameraCtrl', ['$scope', function($scope, $cordovaCamera) {
-    
-    $scope.picture  = {}
+.controller('CameraCtrl', ['$scope', function($scope, $cordovaCamera, $cordovaDialogs) {
+
+    $scope.picture = {}
 
     $scope.getPicture = function(argument) {
 
-        $scope.picture.src  =  null;
+        //$cordovaDialogs.beep(3);
+        //cordova.plugins.notification.badge.set(10);
+        navigator.notification.beep(3)
+
+        $scope.picture.src = null;
 
         // var options = {
         //     quality: 50,
@@ -136,7 +136,7 @@ angular.module('cordova.controllers', ['ngCordova'])
         });
 
         function onSuccess(imageData) {
-            $scope.picture.src  = "data:image/jpeg;base64," + imageData;
+            $scope.picture.src = "data:image/jpeg;base64," + imageData;
         }
 
         function onFail(message) {
@@ -144,6 +144,34 @@ angular.module('cordova.controllers', ['ngCordova'])
         }
 
     }
+
+}])
+
+
+.controller('DatePickerCtrl', ['$scope', function($scope) {
+
+
+    $scope.form = {}
+
+    $scope.pickDate = function(argument) {
+
+        var options = {
+            date: new Date(),
+            mode: 'date'
+        };
+
+        function onSuccess(date) {
+            $scope.form.date = date;
+        }
+
+        function onError(error) { // Android only
+            console.log('Error: ' + error);
+        }
+
+        datePicker.show(options, onSuccess, onError);
+
+
+    };
 
 }])
 
